@@ -4,13 +4,14 @@ import lombok.Data;
 import lombok.NonNull;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Data
 @Entity
-//@Table(name = "subject")
-public class Subject{
+//@Table(name = "subjects")
+public class Subject implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -20,8 +21,8 @@ public class Subject{
     private String description;
     private String assistantName, assistantEmail;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Student> students = new HashSet<>();
+//    @ManyToMany(mappedBy = "subjects", fetch = FetchType.EAGER)
+//    private Set<Student> students = new HashSet<>();
 
 //    @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 //    private Professor professor = new Professor();
@@ -75,11 +76,11 @@ public class Subject{
         this.description = description;
     }
 
-    public Set<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(Set<Student> students) {
-        this.students = students;
-    }
+//    public Set<Student> getStudents() {
+//        return students;
+//    }
+//
+//    public void setStudents(Set<Student> students) {
+//        this.students = students;
+//    }
 }

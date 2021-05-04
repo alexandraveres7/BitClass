@@ -1,32 +1,27 @@
 package com.ale.bitclass;
 
-import com.ale.bitclass.repos.ProfessorRepository;
-import com.ale.bitclass.repos.SubjectRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import com.ale.bitclass.model.Student;
+import com.ale.bitclass.repos.StudentRepository;
+
+
 @Component
 class Initializer implements CommandLineRunner {
-    private final SubjectRepository subjectRepository;
-    private final ProfessorRepository professorRepository;
 
-    public Initializer(SubjectRepository subjectRepository, ProfessorRepository professorRepository) {
-        this.subjectRepository = subjectRepository;
-        this.professorRepository = professorRepository;
+    private final StudentRepository studentRepository;
+
+
+    public Initializer(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
     }
 
     @Override
     public void run(String... args) {
-          System.out.println("App running");
-//        Professor p = new Professor("Adina", "adina@gmail.com");
-//        Subject s1 = new Subject("PCBE", "");
-//        subjectRepository.save(s1);
-//
-//        Subject materie = subjectRepository.findByName("PCBE");
-//        materie.setProfessor(p);
-//
-//        subjectRepository.save(materie);
-//
-//        subjectRepository.findAll().forEach(System.out::println);
+        System.out.println("App running");
+        Student student = new Student("Alexandra Veres", "alexandraveres7@gmail.com", "10");
+
+        studentRepository.save(student);
     }
 }
