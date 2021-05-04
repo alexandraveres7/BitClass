@@ -1,10 +1,9 @@
-package com.ale.bitclass.model;
+package com.bitclass.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "grades_report")
@@ -15,7 +14,7 @@ public class GradesReport {
     private Long gradesReportId;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "student_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     // JsonBackReference needed to prevent infinite recursion.
     @JsonBackReference
     private Student student;
@@ -24,6 +23,26 @@ public class GradesReport {
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;
 
-    @Column(name = "grades")
-    private List<Integer> grade;
+    @Column(name = "grade")
+    private Integer grade;
+
+    public Long getGradesReportId() {
+        return gradesReportId;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public Integer getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Integer grade) {
+        this.grade = grade;
+    }
 }

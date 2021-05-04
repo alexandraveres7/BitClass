@@ -1,4 +1,4 @@
-package com.ale.bitclass.model;
+package com.bitclass.model;
 
 public enum Role {
     STUDENT,

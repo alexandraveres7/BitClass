@@ -1,12 +1,10 @@
-package com.ale.bitclass.model;
+package com.bitclass.model;
 
 import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@Table
-public class Student extends com.ale.bitclass.model.User {
-    private String grade;
+public class Student extends User{
     private static final Role role = Role.STUDENT;
 
     //    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
@@ -26,9 +24,8 @@ public class Student extends com.ale.bitclass.model.User {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Subject> subjects = new HashSet<>();
 
-    public Student(String name, String username, String email, String password, String grade) {
+    public Student(String name, String username, String email, String password) {
         super(name, username, email, password);
-        this.grade = grade;
     }
 
     public void setSubjects(Set<Subject> subjects) {
@@ -41,14 +38,6 @@ public class Student extends com.ale.bitclass.model.User {
 
     public Set<Subject> getSubjects() {
         return subjects;
-    }
-
-    public String getGrade() {
-        return grade;
-    }
-
-    public void setGrade(String grade) {
-        this.grade = grade;
     }
 
     public static Role getRole() {

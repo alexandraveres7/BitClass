@@ -1,4 +1,4 @@
-package com.ale.bitclass;
+package com.bitclass;
 
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;

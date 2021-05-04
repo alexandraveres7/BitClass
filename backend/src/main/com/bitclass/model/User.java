@@ -1,21 +1,19 @@
-package com.ale.bitclass.model;
+package com.bitclass.model;
 
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import org.hibernate.annotations.GenericGenerator;;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.io.Serializable;
 
 @Entity
+@Inheritance(strategy=InheritanceType.JOINED)
 public class User implements Serializable{
-
-    @Id @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="user_id")
+    private Long id;
 
     @Size(min=3, max=40)
     private String name;
@@ -44,11 +42,11 @@ public class User implements Serializable{
 
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

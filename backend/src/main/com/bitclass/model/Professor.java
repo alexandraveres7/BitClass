@@ -1,9 +1,7 @@
-package com.ale.bitclass.model;
+package com.bitclass.model;
 
-import lombok.Data;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
-@Data
 @Entity
 public class Professor extends User {
     private static final Role role = Role.PROFESSOR;

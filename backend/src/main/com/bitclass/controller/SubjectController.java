@@ -1,8 +1,8 @@
-package com.ale.bitclass.controller;
+package com.bitclass.controller;
 
-import com.ale.bitclass.model.Student;
-import com.ale.bitclass.model.Subject;
-import com.ale.bitclass.repos.SubjectRepository;
+import com.bitclass.model.Student;
+import com.bitclass.model.Subject;
+import com.bitclass.repos.SubjectRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

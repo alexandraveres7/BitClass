@@ -1,6 +1,6 @@
-package com.ale.bitclass.repos;
+package com.bitclass.repos;
 
-import com.ale.bitclass.model.Student;
+import com.bitclass.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

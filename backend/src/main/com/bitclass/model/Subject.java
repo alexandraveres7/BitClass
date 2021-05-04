@@ -1,4 +1,4 @@
-package com.ale.bitclass.model;
+package com.bitclass.model;
 
 import lombok.Data;
 import lombok.NonNull;
@@ -13,6 +13,7 @@ import java.util.Set;
 public class Subject implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "subject_id")
     private Long id;
 
     @NonNull
