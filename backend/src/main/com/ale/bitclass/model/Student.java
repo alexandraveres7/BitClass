@@ -17,6 +17,12 @@ public class Student extends com.ale.bitclass.model.User {
 //            inverseJoinColumns = {
 //                    @JoinColumn(name = "course_id", referencedColumnName = "id",
 //                            nullable = false, updatable = false)})
+
+    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
+    private List<GradesReport> gradesReports;
+
+    //Set to be deleted after gradesReport implementation is finished
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Subject> subjects = new HashSet<>();
 
