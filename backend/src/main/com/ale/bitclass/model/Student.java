@@ -1,12 +1,15 @@
 package com.ale.bitclass.model;
 
 import javax.persistence.*;
+import java.util.*;
 
 @Entity
-//@Table(catalog = "students")
+@Table
 public class Student extends com.ale.bitclass.model.User {
     private String grade;
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private static final Role role = Role.STUDENT;
+
+    //    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 //    @JoinTable(name = "students_subjects",
 //            joinColumns = {
 //                    @JoinColumn(name = "student_id", referencedColumnName = "id",
@@ -14,18 +17,35 @@ public class Student extends com.ale.bitclass.model.User {
 //            inverseJoinColumns = {
 //                    @JoinColumn(name = "course_id", referencedColumnName = "id",
 //                            nullable = false, updatable = false)})
-//    private Set<Subject> subjects = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Subject> subjects = new HashSet<>();
 
-    public Student(String name, String email, String grade) {
-        super(name, email);
+    public Student(String name, String username, String email, String password, String grade) {
+        super(name, username, email, password);
         this.grade = grade;
     }
 
-//    public Set<Subject> getSubjects() {
-//        return subjects;
-//    }
+    public void setSubjects(Set<Subject> subjects) {
+        this.subjects = subjects;
+    }
 
     public Student() {
 
+    }
+
+    public Set<Subject> getSubjects() {
+        return subjects;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public static Role getRole() {
+        return role;
     }
 }

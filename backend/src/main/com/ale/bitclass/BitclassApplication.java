@@ -17,12 +17,7 @@ public class BitclassApplication {
     @Bean
     public CommandLineRunner mappingDemo(StudentRepository studentRepository) {
         return args -> {
-
-            // create a student
-            Student student = new Student("Alexandra Veres", "bla", "suhj");
-
-            // save the student
-            studentRepository.save(student);
+            System.out.println("it's all good");
 
         };
     }

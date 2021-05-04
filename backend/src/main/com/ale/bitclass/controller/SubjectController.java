@@ -1,5 +1,6 @@
 package com.ale.bitclass.controller;
 
+import com.ale.bitclass.model.Student;
 import com.ale.bitclass.model.Subject;
 import com.ale.bitclass.repos.SubjectRepository;
 import org.springframework.http.HttpStatus;
@@ -12,7 +13,9 @@ import org.slf4j.LoggerFactory;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -38,21 +41,19 @@ public class SubjectController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
     
-//    @GetMapping("/subject/{id}/students")
-//    Collection<Student> getSubjectStudents(@PathVariable Long id) {
-//        Optional<Subject> subject = subjectRepository.findById(id);
-//        log.info("Request to show students of subject {}", subject);
-//        System.out.println("AICI");
-//        if (subject.isPresent()) {
-//            Set<Student> students = subject.get().getStudents();
-//            System.out.println("Studenti" + students);
-//            if (students.size() < 1) {
-//                System.out.println("no enrolled students");
-//            }
-//            return students;
-//        }
-//        return Collections.emptySet();
-//    }
+    @GetMapping("/subject/{id}/students")
+    Collection<Student> getSubjectStudents(@PathVariable Long id) {
+        Optional<Subject> subject = subjectRepository.findById(id);
+        log.info("Request to show students of subject {}", subject);
+        if (subject.isPresent()) {
+            Set<Student> students = subject.get().getStudents();
+            if (students.size() < 1) {
+                System.out.println("no enrolled students");
+            }
+            return students;
+        }
+        return Collections.emptySet();
+    }
 
     @PostMapping("/subject")
     ResponseEntity<Subject> createSubject(@RequestBody Subject subject) throws URISyntaxException {

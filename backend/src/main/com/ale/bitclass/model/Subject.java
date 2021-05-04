@@ -10,7 +10,6 @@ import java.util.Set;
 
 @Data
 @Entity
-//@Table(name = "subjects")
 public class Subject implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,20 +19,29 @@ public class Subject implements Serializable {
     private String name;
     private String description;
     private String assistantName, assistantEmail;
+    private int places;
 
-//    @ManyToMany(mappedBy = "subjects", fetch = FetchType.EAGER)
-//    private Set<Student> students = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Student> students = new HashSet<>();
 
 //    @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 //    private Professor professor = new Professor();
 
-    public Subject(String name, String description) {
+    public Subject(String name, String description, int places) {
         this.name = name;
         this.description = description;
+        this.places = places;
     }
 
     public Subject() {
 
+    }
+    public int getPlaces() {
+        return places;
+    }
+
+    public void setPlaces(int places) {
+        this.places = places;
     }
 
     public void setId(Long id) {
@@ -76,11 +84,19 @@ public class Subject implements Serializable {
         this.description = description;
     }
 
-//    public Set<Student> getStudents() {
-//        return students;
-//    }
-//
-//    public void setStudents(Set<Student> students) {
-//        this.students = students;
-//    }
+    public void addStudent(Student student){
+        this.students.add(student);
+    }
+
+    public void removeStudent(Student student){
+        this.students.remove(student);
+    }
+
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
+    }
 }

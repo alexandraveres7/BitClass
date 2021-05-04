@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
+import React, {Component} from 'react';
+import {Link, withRouter} from 'react-router-dom';
+import {Button, Container, Form, FormGroup, Input, Label} from 'reactstrap';
 import AppNavbar from './Navbar';
 import ApiHelper from "./ApiHelper";
 import "./SubjectEdit.css"
@@ -12,6 +12,7 @@ class SubjectEdit extends Component {
         description: '',
         assistantName: '',
         assistantEmail: '',
+        places: '',
     };
 
     constructor(props) {
@@ -57,27 +58,35 @@ class SubjectEdit extends Component {
             <Container>
                 {title}
                 <Form onSubmit={this.handleSubmit}>
-                    <FormGroup>
-                        <Label for="name">Name</Label>
-                        <Input type="text" name="name" id="name" value={item.name || ''}
-                               onChange={this.handleChange} autoComplete="name"/>
-                    </FormGroup>
+                    <div className="row">
+                        <FormGroup className="col-md-4 mb-3">
+                            <Label for="name">Name</Label>
+                            <Input type="text" name="name" id="name" value={item.name || ''}
+                                   onChange={this.handleChange} autoComplete="name"/>
+                        </FormGroup>
+                        <FormGroup className="col-md-2 mb-3">
+                            <Label for="places">Places</Label>
+                            <Input type="number" name="places" id="places" value={item.places || ''}
+                                   onChange={this.handleChange} autoComplete="places"/>
+                        </FormGroup>
+                    </div>
                     <FormGroup>
                         <Label for="description">Description</Label>
                         <Input type="text" name="description" id="description" value={item.description || ''}
                                onChange={this.handleChange} autoComplete="description"/>
                     </FormGroup>
-                        <div className="row">
-                    <FormGroup className="col-md-4 mb-3">
-                        <Label for="assistant">Assistant name</Label>
-                        <Input type="text" name="assistantName" id="assistantName" value={item.assistantName || ''}
-                               onChange={this.handleChange} autoComplete="assistant name"/>
-                    </FormGroup>
+                    <div className="row">
                         <FormGroup className="col-md-4 mb-3">
-                        <Label for="assistant">Assistant email</Label>
-                        <Input type="text" name="assistantEmail" id="assistantEmail" value={item.assistantEmail || ''}
-                               onChange={this.handleChange} autoComplete="assistant email"/>
-                    </FormGroup>
+                            <Label for="assistant">Assistant name</Label>
+                            <Input type="text" name="assistantName" id="assistantName" value={item.assistantName || ''}
+                                   onChange={this.handleChange} autoComplete="assistant name"/>
+                        </FormGroup>
+                        <FormGroup className="col-md-4 mb-3">
+                            <Label for="assistant">Assistant email</Label>
+                            <Input type="text" name="assistantEmail" id="assistantEmail"
+                                   value={item.assistantEmail || ''}
+                                   onChange={this.handleChange} autoComplete="assistant email"/>
+                        </FormGroup>
                     </div>
                     <FormGroup>
                         <Button color="primary" type="submit">Save</Button>{' '}

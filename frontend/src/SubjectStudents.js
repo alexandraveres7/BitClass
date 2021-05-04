@@ -2,6 +2,7 @@ import ApiHelper from "./ApiHelper";
 import React, {Component} from "react";
 import AppNavbar from "./Navbar";
 import {Container, Table} from "reactstrap";
+import "./SubjectStudents.css";
 
 
 class SubjectStudents extends Component{
@@ -25,7 +26,17 @@ class SubjectStudents extends Component{
         const {students, areAllocated} = this.state;
         console.log(areAllocated);
         if (!areAllocated) {
-            return <p>No Students Have enrolled so far</p>;
+            return (
+                <div>
+                    <AppNavbar/>
+                    <div className="text-center top-buffer">
+                    <div className="alert alert-danger" role="alert">
+                    No students have enrolled so far!
+                    </div>
+                </div>
+
+                </div>
+            );
         }
         const studentsList = students.map(student => {
             const name = `${student.name}`;

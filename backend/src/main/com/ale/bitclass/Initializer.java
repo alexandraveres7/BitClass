@@ -20,8 +20,8 @@ class Initializer implements CommandLineRunner {
     @Override
     public void run(String... args) {
         System.out.println("App running");
-        Student student = new Student("Alexandra Veres", "alexandraveres7@gmail.com", "10");
-
-        studentRepository.save(student);
+//        Student student = new Student("Alexandra Veres", "alexandraveres7@gmail.com", "10");
+//
+//        studentRepository.save(student);
     }
 }

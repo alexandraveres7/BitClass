@@ -38,6 +38,7 @@ class SubjectsList extends Component{
         const subjectsList = subjects.map(subject => {
             const description = `${subject.description || ''}`;
             const professor = `${subject.assistantName || ''}`;
+            const places = `${subject.places || ''}`;
             const subj_id = `${subject.id}`;
 
             return <tr key={subject.id}>
@@ -46,6 +47,7 @@ class SubjectsList extends Component{
                 </a>
                 <td>{description}</td>
                 <td>{professor}</td>
+                <td>{places}</td>
                 <td>
                     <ButtonGroup>
                         <Button size="sm" color="primary" tag={Link} to={"/subjects/" + subject.id}>Edit</Button>
@@ -69,6 +71,7 @@ class SubjectsList extends Component{
                             <th width="20%">Name</th>
                             <th width="20%">Description</th>
                             <th width="20%">Assistant</th>
+                            <th width="10%">Places</th>
                             <th width="10%"/>
                         </tr>
                         </thead>
