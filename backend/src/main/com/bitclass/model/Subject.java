@@ -25,8 +25,8 @@ public class Subject implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Student> students = new HashSet<>();
 
-//    @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-//    private Professor professor = new Professor();
+    @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    private Professor professor = new Professor();
 
     public Subject(String name, String description, int places) {
         this.name = name;

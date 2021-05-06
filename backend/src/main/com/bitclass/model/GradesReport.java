@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "grades_report")
@@ -24,6 +26,8 @@ public class GradesReport {
     private Subject subject;
 
     @Column(name = "grade")
+    @Min(1)
+    @Max(10)
     private Integer grade;
 
     public Long getGradesReportId() {

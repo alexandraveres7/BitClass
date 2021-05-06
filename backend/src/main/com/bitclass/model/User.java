@@ -1,14 +1,12 @@
 package com.bitclass.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
+//@Inheritance(strategy=InheritanceType.JOINED)
 public class User implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,8 +17,15 @@ public class User implements Serializable{
     private String name;
 
     @NotBlank
+    @Column(unique = true)
     @Size(min=3, max=20)
     private String username;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinTable(name = "user_roles",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Role role;
 
     @NotBlank
     @Email
@@ -28,7 +33,7 @@ public class User implements Serializable{
     private String email;
 
     @NotBlank
-    @Size(min=6, max = 100)
+    @Size(min=8, max = 50)
     private String password;
 
     public User(String name, String username, String email, String password) {
@@ -56,6 +61,14 @@ public class User implements Serializable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getUsername() {

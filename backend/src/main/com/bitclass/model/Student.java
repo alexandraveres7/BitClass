@@ -3,9 +3,9 @@ package com.bitclass.model;
 import javax.persistence.*;
 import java.util.*;
 
+@Table(name="student")
 @Entity
 public class Student extends User{
-    private static final Role role = Role.STUDENT;
 
     //    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 //    @JoinTable(name = "students_subjects",
@@ -16,11 +16,6 @@ public class Student extends User{
 //                    @JoinColumn(name = "course_id", referencedColumnName = "id",
 //                            nullable = false, updatable = false)})
 
-    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL)
-    private List<GradesReport> gradesReports;
-
-    //Set to be deleted after gradesReport implementation is finished
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Subject> subjects = new HashSet<>();
 
@@ -38,9 +33,5 @@ public class Student extends User{
 
     public Set<Subject> getSubjects() {
         return subjects;
-    }
-
-    public static Role getRole() {
-        return role;
     }
 }

@@ -10,7 +10,7 @@ public class FinalGrades {
      private List<GradesReport> gradesReportList;
      private ArrayList<Integer> grades = new ArrayList<>();
 
-     public long getStudentsFinalGradeForSubject(Long subject_id, Long student_id){
+     public long getFinalGrade(Long subject_id, Long student_id){
         this.gradesReportList = this.initiliazer.getGradesReportRepository().findAll();
         for(GradesReport report: gradesReportList ){
             if (report.getStudent().getId().equals(student_id) && report.getSubject().getId().equals(subject_id)){
