@@ -1,11 +1,12 @@
+import axios from "axios";
+
 class AuthenticationService {
-    signin = (username, password) => {
-        return fetch("/v1/auth/login",
-            {
-                method: 'POST',
-                body: JSON.stringify({"username": username, "password": password})})
+    backend_url = process.env.REACT_APP_BACKEND_API_BASE_URL;
+    login = (username, password) => {
+        return axios.post(`${this.backend_url}/v1/auth/login`, {username, password})
             .then(response => {
                 if (response.data.accessToken) {
+                    console.log(response.data);
                     localStorage.setItem("user", JSON.stringify(response.data));
                 }
                 return response.data;
@@ -20,10 +21,9 @@ class AuthenticationService {
         localStorage.removeItem("user");
     }
 
-    register = async(firstname, lastname, username, email, password) => {
-        return await fetch("/v1/auth/register", {
-            firstname,
-            lastname,
+    register = async(name, username, email, password) => {
+        return await axios.post(`${this.backend_url}/v1/auth/register`, {
+            name,
             username,
             email,
             password
@@ -31,7 +31,7 @@ class AuthenticationService {
     }
 
     getCurrentUser() {
-        return JSON.parse(localStorage.getItem('user'));;
+        return JSON.parse(localStorage.getItem('user'));
     }
 }
 

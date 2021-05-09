@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Button, ButtonGroup, Container, Table } from 'reactstrap';
-import AppNavbar from './Navbar';
+import AppNavbar from './AppNavbar';
 import { Link } from 'react-router-dom';
 import ApiHelper from "./ApiHelper";
 import "./SubjectsList.css";

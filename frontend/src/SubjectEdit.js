@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import {Button, Container, Form, FormGroup, Input, Label} from 'reactstrap';
-import AppNavbar from './Navbar';
+import AppNavbar from './AppNavbar';
 import ApiHelper from "./ApiHelper";
 import "./SubjectEdit.css"
 

@@ -6,19 +6,29 @@ import SubjectsList from './SubjectsList';
 import SubjectEdit from "./SubjectEdit";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SubjectStudents from "./SubjectStudents";
+import SignUp from "./auth/components/SignUp";
+import Profile from "./auth/components/Profile";
+import StudentCourses from "./auth/components/StudentCourses";
+import StudentSchedule from "./auth/components/StudentSchedule";
 
 class App extends Component {
   render() {
     return (
-        <div className="align-page">
+        <div className="page-back-color">
+        <div className="align-page components-back-color">
         <Router>
           <Switch>
             <Route path='/' exact={true} component={Home}/>
+            <Route path='/register' component={SignUp}/>
+            <Route path='/profile' component={Profile}/>
             <Route path='/subjects' exact={true} component={SubjectsList}/>
             <Route path='/subjects/:id' component={SubjectEdit}/>
             <Route path='/subject/:id/students' component={SubjectStudents}/>
+            <Route path='/student/courses' component={StudentCourses}/>
+            <Route path='/student/schedule' component={StudentSchedule}/>
           </Switch>
         </Router>
+        </div>
         </div>
     )
   }

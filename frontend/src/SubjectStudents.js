@@ -1,6 +1,6 @@
 import ApiHelper from "./ApiHelper";
 import React, {Component} from "react";
-import AppNavbar from "./Navbar";
+import AppNavbar from "./AppNavbar";
 import {Container, Table} from "reactstrap";
 import "./SubjectStudents.css";
 

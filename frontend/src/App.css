@@ -13,14 +13,27 @@
   }
 }
 
+.btn-primary{
+  background-color: #ffff00;
+}
+
 .container, .container-fluid {
-  margin-top: 20px;
+  margin-top: 50px;
 }
 
 .align-page{
+  height: 100vh;
   margin: auto;
   width: 50%;
   padding: 10px;
+}
+
+.page-back-color{
+  background-color: gainsboro;
+}
+
+.components-back-color{
+  background-color: white;
 }
 
 .App-header {

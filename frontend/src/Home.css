@@ -1,0 +1,29 @@
+.subtitle {
+    display: block;
+    font-family: Georgia, serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    word-spacing: 2px;
+    color: #000000;
+    font-weight: normal;
+    text-decoration: none solid rgb(68, 68, 68);
+    font-style: italic;
+    font-variant: normal;
+    text-transform: none;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.pos-txt {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.hr {
+    margin-top: 0;
+    border: 0;
+    width: 100%;
+    color: black;
+    background-color: black;
+    height: 4px;
+}
