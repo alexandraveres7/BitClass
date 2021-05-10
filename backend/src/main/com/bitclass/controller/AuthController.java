@@ -2,8 +2,8 @@ package com.bitclass.controller;
 
 import com.bitclass.authentication.message.request.LoginDTO;
 import com.bitclass.authentication.message.request.RegisterDTO;
-import com.bitclass.authentication.message.response.JwtResponse;
 import com.bitclass.authentication.security.jwt.JwtProvider;
+import com.bitclass.authentication.security.services.UserInformation;
 import com.bitclass.model.*;
 import com.bitclass.repos.ProfessorRepository;
 import com.bitclass.repos.StudentRepository;
@@ -20,9 +20,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/v1/auth")
 public class AuthController {
 
@@ -57,7 +59,16 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = jwtProvider.generateJwtToken(authentication);
-        return ResponseEntity.ok(new JwtResponse(jwt));
+        UserInformation userDetails = (UserInformation) authentication.getPrincipal();
+
+        Map<String, String> response = new HashMap<>();
+        response.put("accessToken", jwt);
+        response.put("id", userDetails.getId().toString());
+        response.put("username", userDetails.getUsername());
+        response.put("email", userDetails.getEmail());
+        response.put("role", userDetails.getAuthorities().toString());
+
+        return ResponseEntity.ok().body(response);
     }
 
     @PostMapping("/register")
@@ -99,12 +110,7 @@ public class AuthController {
                 System.out.println("Unknown user role");
                 throw new BadCredentialsException("User role invalid");
         }
-
-//                userRepository.save(user);
-
-
-        return ResponseEntity.ok().body("User registered successfully!");
+        return ResponseEntity.ok().body("Registered successfully!");
     }
-
 
 }

@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/v1")
 public class SubjectController {
     private final Logger log = LoggerFactory.getLogger(SubjectController.class);

@@ -94,6 +94,9 @@ class SignUp extends Component {
                         message: response.data,
                         successful: true
                     });
+                    setTimeout(() => {
+                        this.props.history.push("/");
+                    }, 2000)
                 },
                 error => {
                     console.log("Fail! Error = " + error.toString());

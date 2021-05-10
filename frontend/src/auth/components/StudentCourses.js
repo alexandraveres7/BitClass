@@ -1,23 +1,22 @@
 import AppNavbar from '../../AppNavbar';
 import React, { Component } from 'react';
 import {Container, Table} from 'reactstrap';
+import { Link } from 'react-router-dom';
 import BackendService from '../services/BackendService';
 import ApiHelper from "../../ApiHelper";
-import Button from "bootstrap";
 
 class StudentCourses extends Component{
 
     constructor(props) {
         super(props);
-        this.state = {subjects: [], areAllocated: false};
+        this.state = {subjects: [], areAllocated: true};
         this.ApiHelper = new ApiHelper();
     }
 
     componentDidMount() {
-        const path = this.props.location.pathname;
         const response = BackendService.getStudentCourses();
-        if (response.length > 0){
-            this.setState({areAllocated: true})
+        if (response.ok){
+            this.setState({areAllocated: true});
         }
         response.then(data => this.setState({subjects: data}));
     }
@@ -25,8 +24,8 @@ class StudentCourses extends Component{
     render() {
         const {subjects, areAllocated} = this.state;
 
-        var jsonQuery = require('json-query');
-
+        const jsonQuery = require('json-query');
+        
         console.log(areAllocated);
         if (!areAllocated) {
             return (
@@ -34,25 +33,25 @@ class StudentCourses extends Component{
                     <AppNavbar/>
                     <div className="text-center top-buffer">
                         <div className="alert alert-danger" role="alert">
-                            You have not enrolled to any courses!
+                            You are not enrolled to any courses!
                         </div>
-                        <Button onClick='/student/enroll'>Enroll now</Button>
+                        <Link to="/student/enroll" className="btn btn-primary">Enroll now</Link>
                     </div>
 
                 </div>
             );
         }
-        const subjectsList = subjects.map(subject => {
-            const name = `${subject.name}`;
-            const description = `${subject.description}`
-            const assistant_name = `${subject.assistantName}`;
-            const assistant_email = `${subject.assistantEmail}`;
-            const professor = jsonQuery('subject.professor.name', {data: subject})
+
+        const subjectsList = subjects.map((subject) => {
+            console.log(subject)
+            const name = `${subject.name || ''}`;
+            const description = `${subject.description || ''}`
+            const assistant_name = `${subject.assistantName || ''}`;
+            const professor = jsonQuery('[professor][name]', {data: [subject]}).value;
             return <tr key={subject.id}>
                 <td style={{whiteSpace: 'nowrap'}}>{name}</td>
                 <td>{description}</td>
                 <td>{assistant_name}</td>
-                <td>{assistant_email}</td>
                 <td>{professor}</td>
             </tr>
         });
@@ -65,10 +64,10 @@ class StudentCourses extends Component{
                     <Table className="mt-4">
                         <thead>
                         <tr>
-                            <th width="30%">Name</th>
+                            <th width="20%">Name</th>
                             <th width="20%">Description</th>
-                            <th width="30%">Assistant name & email</th>
-                            <th width="30%">Professor</th>
+                            <th width="15%">Assistant name</th>
+                            <th width="20%">Professor</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -80,4 +79,5 @@ class StudentCourses extends Component{
         );
     }
 }
+
 export default StudentCourses;

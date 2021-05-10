@@ -23,6 +23,26 @@ public class Student extends User{
         super(name, username, email, password);
     }
 
+    public boolean checkSubject(Subject subject){
+        boolean isPresent = false;
+        for(Subject sbj: this.subjects){
+            if (sbj.getName().equals(subject.getName())) {
+                isPresent = true;
+                break;
+            }
+        }
+        return isPresent;
+    }
+
+    public void addSubject(Subject subject){
+        if(this.checkSubject(subject)){
+            this.subjects.add(subject);
+        }
+        else{
+            throw new EntityExistsException();
+        }
+    }
+
     public void setSubjects(Set<Subject> subjects) {
         this.subjects = subjects;
     }

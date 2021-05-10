@@ -15,7 +15,10 @@ class BackendService {
 
     async getStudentCourses() {
         const user = JSON.parse(localStorage.getItem('user'));
-        return await axios.get(`${this.backend_url}/v1/student/`+ user.id + `/courses`, );
+        const url = `${this.backend_url}/v1/student/${user.id}/courses`;
+        console.log(url);
+        const response = await axios.get(`${this.backend_url}/v1/student/${user.id}/courses`);
+        return response.data;
     }
 
     async getProfessorBoard() {
