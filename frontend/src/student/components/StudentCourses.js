@@ -2,20 +2,19 @@ import AppNavbar from '../../AppNavbar';
 import React, { Component } from 'react';
 import {Container, Table} from 'reactstrap';
 import { Link } from 'react-router-dom';
-import BackendService from '../services/BackendService';
-import ApiHelper from "../../ApiHelper";
+import BackendService from '../../auth/services/BackendService';
 
 class StudentCourses extends Component{
 
     constructor(props) {
         super(props);
-        this.state = {subjects: [], areAllocated: true};
-        this.ApiHelper = new ApiHelper();
+        this.state = {subjects: [], areAllocated: false};
     }
 
     componentDidMount() {
         const response = BackendService.getStudentCourses();
-        if (response.ok){
+        let count = Object.keys(response).length;
+        if (count > 0){
             this.setState({areAllocated: true});
         }
         response.then(data => this.setState({subjects: data}));

@@ -15,14 +15,20 @@ class BackendService {
 
     async getStudentCourses() {
         const user = JSON.parse(localStorage.getItem('user'));
-        const url = `${this.backend_url}/v1/student/${user.id}/courses`;
-        console.log(url);
         const response = await axios.get(`${this.backend_url}/v1/student/${user.id}/courses`);
         return response.data;
     }
 
-    async getProfessorBoard() {
-        return await axios.get(`${this.backend_url}/v1/test/professor`);
+    async getAllCourses() {
+        const response = await axios.get(`${this.backend_url}/v1/subjects`);
+        console.log(response.data);
+        return response.data;
+    }
+
+    async enrollStudent(subjects) {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const response = await axios.put(`${this.backend_url}/v1/student/${user.id}/enroll`, subjects);
+        return response.status;
     }
 }
 

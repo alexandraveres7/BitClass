@@ -65,7 +65,7 @@ public class RegisterDTO {
         if (this.email.endsWith("@student.upt.ro")){
             this.role = new Role(RoleName.ROLE_STUDENT);
         }
-        else if (this.email.endsWith("@cs.upt.ro") || this.email.endsWith("@gmail.com")){
+        else if (this.email.endsWith("@cs.upt.ro")){
             this.role = new Role(RoleName.ROLE_PROFESSOR);
         }
         else throw new BadCredentialsException("Invalid email domain!");

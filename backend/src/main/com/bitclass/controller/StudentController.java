@@ -36,10 +36,10 @@ public class StudentController {
         Optional<Student> student = this.studentRepository.findById(id);
         if (student.isPresent()) {
             Set<Subject> courses = student.get().getSubjects();
-            Subject subject = new Subject("VVS", "Unit & integration testing", 50);
-            Professor professor = new Professor("Adina Rolea", "adinarolea", "adinarolea@gmail.com", "password");
-            subject.setProfessor(professor);
-            courses.add(subject);
+//            Subject subject = new Subject("VVS", "Unit & integration testing", 50);
+//            Professor professor = new Professor("Adina Rolea", "adinarolea", "adinarolea@gmail.com", "password");
+//            subject.setProfessor(professor);
+//            courses.add(subject);
             if (courses.size() < 1) {
                 log.info("Student has no enrolled courses" );
             }

@@ -8,8 +8,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SubjectStudents from "./SubjectStudents";
 import SignUp from "./auth/components/SignUp";
 import Profile from "./auth/components/Profile";
-import StudentCourses from "./auth/components/StudentCourses";
-import StudentSchedule from "./auth/components/StudentSchedule";
+import StudentCourses from "./student/components/StudentCourses";
+import StudentSchedule from "./student/components/StudentSchedule";
+import StudentEnroll from "./student/components/StudentEnroll";
+import StudentEnroll2 from "./student/components/StudentEnroll2";
 
 class App extends Component {
   render() {
@@ -25,6 +27,7 @@ class App extends Component {
             <Route path='/subjects/:id' component={SubjectEdit}/>
             <Route path='/subject/:id/students' component={SubjectStudents}/>
             <Route path='/student/courses' component={StudentCourses}/>
+            <Route path='/student/enroll' component={StudentEnroll}/>
             <Route path='/student/schedule' component={StudentSchedule}/>
           </Switch>
         </Router>
