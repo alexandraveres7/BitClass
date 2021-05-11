@@ -27,7 +27,10 @@ class BackendService {
 
     async enrollStudent(subjects) {
         const user = JSON.parse(localStorage.getItem('user'));
+        console.log('USER', user)
         const response = await axios.put(`${this.backend_url}/v1/student/${user.id}/enroll`, subjects);
+        console.log('RESPONse: ', response)
+        console.log('Subjects', subjects)
         return response.status;
     }
 }

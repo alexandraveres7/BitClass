@@ -16,7 +16,7 @@ public class Student extends User{
 //                    @JoinColumn(name = "course_id", referencedColumnName = "id",
 //                            nullable = false, updatable = false)})
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private Set<Subject> subjects = new HashSet<>();
 
     public Student(String name, String username, String email, String password) {
@@ -35,7 +35,7 @@ public class Student extends User{
     }
 
     public void addSubject(Subject subject){
-        if(this.checkSubject(subject)){
+        if(!this.checkSubject(subject)){
             this.subjects.add(subject);
         }
         else{

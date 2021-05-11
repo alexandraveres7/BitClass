@@ -46,7 +46,8 @@ class StudentEnroll extends Component{
         const checkedCount = Object.values(checkedValues).filter((value) => value)
             .length;
 
-        console.log(this.state.checkedItems);
+        console.log('CIAO CIAO', )
+
 
         const subjects = this.state.subjects;
 
@@ -67,7 +68,7 @@ class StudentEnroll extends Component{
                     </label>
                 ))}
                 </div>
-                <Button type='submit' onClick={handleCoursesSubmit(subjects)}>Enroll</Button>
+                <Button type='submit' onClick={this.handleCoursesSubmit(Object.keys(this.state.checkedItems))}>Enroll</Button>
             </div>
         );
     };

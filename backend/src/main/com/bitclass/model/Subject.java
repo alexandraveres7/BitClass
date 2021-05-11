@@ -22,7 +22,7 @@ public class Subject implements Serializable {
     private String assistantName, assistantEmail;
     private int places;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private Set<Student> students = new HashSet<>();
 
     @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)

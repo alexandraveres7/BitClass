@@ -48,20 +48,24 @@ public class StudentController {
         return Collections.emptySet();
     }
 
-    @PutMapping("/enroll/{id}")
+    @PutMapping("/{id}/enroll")
     @PreAuthorize("hasRole('ROLE_STUDENT')")
-    public ResponseEntity<Student> enrollStudentInCourses(@PathVariable Long id, @RequestBody List<Subject> subjects){
+    public ResponseEntity<?> enrollStudentInCourses(@PathVariable Long id, @RequestBody List<String> subjectsNames){
         log.info("Request to enroll student in courses");
-        if (subjects.size() > 6){
+        if (subjectsNames.size() > 6){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         Optional<Student> student = this.studentRepository.findById(id);
+        Set<Subject> subjects = new HashSet<>();
         if (student.isPresent()) {
-           for(Subject subject: subjects){
-               student.get().addSubject(subject);
-             //  this.subjectRepository.findById(subject.getId()).get().getStudents().add(student.get());
+           for(String subjectName: subjectsNames){
+               Subject subject = this.subjectRepository.findByName(subjectName);
+               subjects.add(subject);
+              // student.get().addSubject(subject);
+               this.subjectRepository.findById(subject.getId()).get().getStudents().add(student.get());
            }
-            return ResponseEntity.ok().body(student.get());
+           student.get().setSubjects(subjects);
+           return ResponseEntity.ok().body(student.get());
         }
         else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
