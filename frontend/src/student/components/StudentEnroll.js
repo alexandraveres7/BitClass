@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import BackendService from "../../auth/services/BackendService";
+import BackendService from "../services/StudentService";
 import AppNavbar from "../../AppNavbar";
 import './StudentEnroll.css'
-import {Button} from "reactstrap";
 
 class StudentEnroll extends Component{
     constructor(props){
@@ -31,12 +30,12 @@ class StudentEnroll extends Component{
 
     handleCoursesSubmit (subjects) {
         BackendService.enrollStudent(subjects).then(response => {
-            if (!response.ok) {
-               return (
-                   <h1> Enrollment unsuccessful</h1>
-               )
+            if (response.status === 200) {
+                   this.props.history.push("/student/courses")
             } else {
-                this.props.history.push("/student/courses");
+                return(
+                <h1> Enrollment unsuccessful</h1>
+            )
             }
         })
     }
@@ -46,29 +45,27 @@ class StudentEnroll extends Component{
         const checkedCount = Object.values(checkedValues).filter((value) => value)
             .length;
 
-        console.log('CIAO CIAO', )
-
-
         const subjects = this.state.subjects;
 
         return (
             <div>
                 <AppNavbar/>
                 <div className="check">
-                {subjects.map((item, index) => (
+                {subjects.map((item) => (
                     <label className='container' key={item.id}>
                         <input
                             type={`checkbox`}
                             name={item.name}
                             checked={this.state.checkedItems[item.name] || false}
                             onChange={this.handleChange}
-                            disabled={!checkedValues[item.name] && checkedCount >= 1}
+                            disabled={!checkedValues[item.name] && checkedCount >= 4}
                         />
                         <span className="checkmark">{item.name}</span>
+                        <span>{item.percent}%</span>
                     </label>
                 ))}
                 </div>
-                <Button type='submit' onClick={this.handleCoursesSubmit(Object.keys(this.state.checkedItems))}>Enroll</Button>
+                <button type='submit' onClick={this.handleCoursesSubmit(Object.keys(this.state.checkedItems))}>Enroll</button>
             </div>
         );
     };

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import { Button, ButtonGroup, Container, Table } from 'reactstrap';
-import AppNavbar from './AppNavbar';
+import AppNavbar from '../../AppNavbar';
 import { Link } from 'react-router-dom';
-import ApiHelper from "./ApiHelper";
-import "./SubjectsList.css";
+import ApiHelperService from "../services/ApiHelperService";
+import "../../SubjectsList.css";
 
 class SubjectsList extends Component{
 
@@ -11,7 +11,7 @@ class SubjectsList extends Component{
         super(props);
         this.state = {subjects: [], isLoading: true};
         this.remove = this.remove.bind(this);
-        this.ApiHelper = new ApiHelper()
+        this.ApiHelper = new ApiHelperService()
     }
 
     componentDidMount() {
@@ -42,7 +42,7 @@ class SubjectsList extends Component{
             const subj_id = `${subject.id}`;
 
             return <tr key={subject.id}>
-                <a href={`subject/${subj_id}/students`}>
+                <a href={`/subject/${subj_id}/students`}>
                 <td  style={{whiteSpace: 'nowrap'}}>{subject.name}</td>
                 </a>
                 <td>{description}</td>

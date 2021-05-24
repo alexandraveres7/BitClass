@@ -10,12 +10,16 @@ axios.interceptors.request.use(config => {
     return config;
 });
 
-class BackendService {
+const backendServer = axios.create({
+    baseURL: process.env.REACT_APP_BACKEND_API_BASE_URL,
+});
+
+class StudentService {
     backend_url = process.env.REACT_APP_BACKEND_API_BASE_URL;
 
     async getStudentCourses() {
         const user = JSON.parse(localStorage.getItem('user'));
-        const response = await axios.get(`${this.backend_url}/v1/student/${user.id}/courses`);
+        const response = await backendServer(`/v1/student/${user.id}/courses`);
         return response.data;
     }
 
@@ -27,12 +31,8 @@ class BackendService {
 
     async enrollStudent(subjects) {
         const user = JSON.parse(localStorage.getItem('user'));
-        console.log('USER', user)
-        const response = await axios.put(`${this.backend_url}/v1/student/${user.id}/enroll`, subjects);
-        console.log('RESPONse: ', response)
-        console.log('Subjects', subjects)
-        return response.status;
+        return await axios.put(`${this.backend_url}/v1/student/${user.id}/enroll`, subjects);
     }
 }
 
-export default new BackendService();
+export default new StudentService();

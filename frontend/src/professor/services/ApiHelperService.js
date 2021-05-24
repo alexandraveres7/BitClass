@@ -1,24 +1,35 @@
 import dotenv from "dotenv"
 
-import logger from "./Logger"
+import logger from "../../Logger"
 
 dotenv.config()
 
-class ApiHelper {
+class ApiHelperService {
 
     backend_url = process.env.REACT_APP_BACKEND_API_BASE_URL;
+    user = JSON.parse(localStorage.getItem('user'));
 
     async get(urlPath) {
-        const response = await fetch(`${this.backend_url}${urlPath}`, {method: 'GET'});
+        console.log(this.user.accessToken);
+        const response = await fetch(`${this.backend_url}${urlPath}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + this.user.accessToken,
+            }
+        });
         return response.json();
     }
 
     async get_students(urlPath) {
+        console.log(this.user.accessToken);
         let response;
         try {
             response = await fetch(`${this.backend_url}/v1${urlPath}`, {
                 method: 'GET',
-                headers: {'Origin': 'http://localhost:3000'}
+                headers: {
+                    'Origin': 'http://localhost:3000',
+                    'Authorization': 'Bearer ' + this.user.accessToken,
+                }
             });
         } catch (error) {
             logger.error('Failed to get students in subjectStudent', error)
@@ -36,7 +47,8 @@ class ApiHelper {
         await fetch(`${this.backend_url}${urlPath}`, {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this.user.accessToken,
             }
         });
     }
@@ -46,11 +58,12 @@ class ApiHelper {
             method: (subject.id) ? 'PUT' : 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this.user.accessToken,
             },
             body: JSON.stringify(subject),
         });
     }
 }
 
-export default ApiHelper
+export default ApiHelperService

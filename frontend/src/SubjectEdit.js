@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import {Button, Container, Form, FormGroup, Input, Label} from 'reactstrap';
 import AppNavbar from './AppNavbar';
-import ApiHelper from "./ApiHelper";
+import ApiHelperService from "./professor/services/ApiHelperService";
 import "./SubjectEdit.css"
 
 class SubjectEdit extends Component {
@@ -22,7 +22,7 @@ class SubjectEdit extends Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.ApiHelper = new ApiHelper();
+        this.ApiHelper = new ApiHelperService();
     }
 
     async componentDidMount() {
@@ -46,7 +46,7 @@ class SubjectEdit extends Component {
         event.preventDefault();
         const {item} = this.state;
         await this.ApiHelper.edit_subject("/v1/subject", item)
-        this.props.history.push('/subjects');
+        this.props.history.push('/professor/courses');
     }
 
     render() {
@@ -90,7 +90,7 @@ class SubjectEdit extends Component {
                     </div>
                     <FormGroup>
                         <Button color="primary" type="submit">Save</Button>{' '}
-                        <Button color="secondary" tag={Link} to="/subjects">Cancel</Button>
+                        <Button color="secondary" tag={Link} to="/professor/courses">Cancel</Button>
                     </FormGroup>
                 </Form>
             </Container>

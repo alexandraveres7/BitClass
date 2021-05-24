@@ -1,4 +1,6 @@
-import {Component} from "react";
+import React, {Component} from "react";
+import StudentEditSchedule from "./StudentEditSchedule";
+import AppNavbar from "../../AppNavbar";
 
 class StudentSchedule extends Component {
     constructor(props) {
@@ -7,6 +9,15 @@ class StudentSchedule extends Component {
             content: "",
             error: ""
         }
+    }
+
+    render = () => {
+        return(
+            <div>
+                <AppNavbar/>
+                <StudentEditSchedule/>
+            </div>
+        )
     }
 }
 

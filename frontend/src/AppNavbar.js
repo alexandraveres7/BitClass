@@ -70,6 +70,8 @@ export default class AppNavbar extends Component {
                                         </NavbarText>
                                     </NavItem>
                                     {this.state.showStudent && <NavLink style={{color: '#000000'}} href="/student/courses">Courses</NavLink>}
+                                    {this.state.showStudent && <NavLink style={{color: '#000000'}} href="/student/schedule">Schedule</NavLink>}
+                                    {this.state.showProfessor && <NavLink style={{color: '#000000'}} href="/professor/courses">Courses</NavLink>}
                                     <NavItem className="nav-item-space">
                                         <NavLink href="/" onClick={this.signOut}>SignOut</NavLink>
                                     </NavItem>

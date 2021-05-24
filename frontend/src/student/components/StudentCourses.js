@@ -2,18 +2,20 @@ import AppNavbar from '../../AppNavbar';
 import React, { Component } from 'react';
 import {Container, Table} from 'reactstrap';
 import { Link } from 'react-router-dom';
-import BackendService from '../../auth/services/BackendService';
+import StudentService from '../services/StudentService';
 
 class StudentCourses extends Component{
 
     constructor(props) {
         super(props);
-        this.state = {subjects: [], areAllocated: false};
+        this.state = {subjects: [], areAllocated: true};
     }
 
     componentDidMount() {
-        const response = BackendService.getStudentCourses();
+        const response = StudentService.getStudentCourses();
         let count = Object.keys(response).length;
+        console.log(count);
+
         if (count > 0){
             this.setState({areAllocated: true});
         }
@@ -59,7 +61,7 @@ class StudentCourses extends Component{
             <div>
                 <AppNavbar/>
                 <Container fluid>
-                    <h3>Subjects</h3>
+                    <h3>Year 4 - Subjects</h3>
                     <Table className="mt-4">
                         <thead>
                         <tr>

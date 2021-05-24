@@ -1,4 +1,4 @@
-import ApiHelper from "./ApiHelper";
+import ApiHelperService from "./professor/services/ApiHelperService";
 import React, {Component} from "react";
 import AppNavbar from "./AppNavbar";
 import {Container, Table} from "reactstrap";
@@ -10,12 +10,13 @@ class SubjectStudents extends Component{
     constructor(props) {
         super(props);
         this.state = {students: [], areAllocated: false};
-        this.ApiHelper = new ApiHelper();
+        this.ApiHelper = new ApiHelperService();
     }
 
     componentDidMount() {
         const path = this.props.location.pathname;
-        const response = this.ApiHelper.get_students(path);
+        const revised_path = path.slice(10);
+        const response = this.ApiHelper.get_students(revised_path);
         if (response.length > 0){
             this.setState({areAllocated: true})
         }
@@ -40,10 +41,10 @@ class SubjectStudents extends Component{
         }
         const studentsList = students.map(student => {
             const name = `${student.name}`;
-            const grade = `${student.grade}`;
+            // const grade = `${student.grade}`;
             return <tr key={student.id}>
                 <td style={{whiteSpace: 'nowrap'}}>{name}</td>
-                <td>{grade}</td>
+                {/*<td>{grade}</td>*/}
             </tr>
         });
 
