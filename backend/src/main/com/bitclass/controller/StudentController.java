@@ -1,10 +1,11 @@
 package com.bitclass.controller;
 
-import com.bitclass.model.Professor;
 import com.bitclass.model.Student;
 import com.bitclass.model.Subject;
+import com.bitclass.model.dto.StudentDTO;
 import com.bitclass.repos.StudentRepository;
 import com.bitclass.repos.SubjectRepository;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -52,20 +53,23 @@ public class StudentController {
     @PreAuthorize("hasRole('ROLE_STUDENT')")
     public ResponseEntity<?> enrollStudentInCourses(@PathVariable Long id, @RequestBody List<String> subjectsNames){
         log.info("Request to enroll student in courses");
-        if (subjectsNames.size() > 6){
+
+        if (subjectsNames.size() > 4){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+
         Optional<Student> student = this.studentRepository.findById(id);
-        Set<Subject> subjects = new HashSet<>();
+        Set<Subject> subjects = this.subjectRepository.findByNameIn(subjectsNames);
+
         if (student.isPresent()) {
-           for(String subjectName: subjectsNames){
-               Subject subject = this.subjectRepository.findByName(subjectName);
-               subjects.add(subject);
-              // student.get().addSubject(subject);
-               this.subjectRepository.findById(subject.getId()).get().getStudents().add(student.get());
-           }
-           student.get().setSubjects(subjects);
-           return ResponseEntity.ok().body(student.get());
+            Student s = student.get();
+            s.setSubjects(subjects);
+            for(Subject subject: subjects){
+                subject.addStudent(s);
+            }
+            ModelMapper modelMapper = new ModelMapper();
+            StudentDTO studentDTO = modelMapper.map(s, StudentDTO.class);
+            return ResponseEntity.ok().body(studentDTO);
         }
         else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

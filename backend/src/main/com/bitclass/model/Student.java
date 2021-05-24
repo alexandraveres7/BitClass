@@ -6,16 +6,6 @@ import java.util.*;
 @Table(name="student")
 @Entity
 public class Student extends User{
-
-    //    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-//    @JoinTable(name = "students_subjects",
-//            joinColumns = {
-//                    @JoinColumn(name = "student_id", referencedColumnName = "id",
-//                            nullable = false, updatable = false)},
-//            inverseJoinColumns = {
-//                    @JoinColumn(name = "course_id", referencedColumnName = "id",
-//                            nullable = false, updatable = false)})
-
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private Set<Subject> subjects = new HashSet<>();
 

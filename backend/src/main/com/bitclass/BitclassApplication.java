@@ -10,12 +10,5 @@ public class BitclassApplication {
     public static void main(String[] args) {
         SpringApplication.run(BitclassApplication.class, args);
     }
-//    @Bean
-//    public CommandLineRunner mappingDemo() {
-//        return args -> {
-//            System.out.println("it's all good");
-//
-//        };
-//    }
 
 }

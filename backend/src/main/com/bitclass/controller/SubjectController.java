@@ -33,13 +33,13 @@ public class SubjectController {
     @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_PROFESSOR')")
     @GetMapping("/subjects")
     Collection<Subject> subjects() {
-        Subject subject1 = new Subject("PCBE", "Concurrent programming", 50);
-        Subject subject2 = new Subject("SO", "Processes, threads, operating systems related..", 100);
-        Subject subject3 = new Subject("VVS", "Unit and integration testing", 70);
-        subjectRepository.deleteAll();
-        subjectRepository.save(subject1);
-        subjectRepository.save(subject2);
-        subjectRepository.save(subject3);
+//        Subject subject1 = new Subject("PCBE", "Concurrent programming", 50);
+//        Subject subject2 = new Subject("SO", "Processes, threads, operating systems related..", 100);
+//        Subject subject3 = new Subject("VVS", "Unit and integration testing", 70);
+//        subjectRepository.deleteAll();
+//        subjectRepository.save(subject1);
+//        subjectRepository.save(subject2);
+//        subjectRepository.save(subject3);
         return subjectRepository.findAll();
     }
 

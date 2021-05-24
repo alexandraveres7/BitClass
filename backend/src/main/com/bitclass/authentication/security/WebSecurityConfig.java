@@ -2,7 +2,7 @@ package com.bitclass.authentication.security;
 
 import com.bitclass.authentication.security.jwt.JwtAuthEntryPoint;
 import com.bitclass.authentication.security.jwt.JwtFilter;
-import com.bitclass.authentication.security.services.UserDetailsServiceImpl;
+import com.bitclass.authentication.security.services.UserInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +24,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 )
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    UserDetailsServiceImpl userDetailsService;
+    UserInformationService userDetailsService;
 
     @Autowired
     private JwtAuthEntryPoint unauthorizedHandler;

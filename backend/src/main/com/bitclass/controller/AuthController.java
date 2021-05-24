@@ -59,14 +59,14 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = jwtProvider.generateJwtToken(authentication);
-        UserInformation userDetails = (UserInformation) authentication.getPrincipal();
+        UserInformation userInformation = (UserInformation) authentication.getPrincipal();
 
         Map<String, String> response = new HashMap<>();
         response.put("accessToken", jwt);
-        response.put("id", userDetails.getId().toString());
-        response.put("username", userDetails.getUsername());
-        response.put("email", userDetails.getEmail());
-        response.put("role", userDetails.getAuthorities().toString());
+        response.put("id", userInformation.getId().toString());
+        response.put("username", userInformation.getUsername());
+        response.put("email", userInformation.getEmail());
+        response.put("role", userInformation.getAuthorities().toString());
 
         return ResponseEntity.ok().body(response);
     }
