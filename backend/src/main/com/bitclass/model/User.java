@@ -6,7 +6,6 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 
 @Entity
-//@Inheritance(strategy=InheritanceType.JOINED)
 public class User implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

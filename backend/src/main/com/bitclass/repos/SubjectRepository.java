@@ -1,5 +1,6 @@
 package com.bitclass.repos;
 
+import com.bitclass.model.Professor;
 import com.bitclass.model.Subject;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,4 +14,6 @@ public interface SubjectRepository extends JpaRepository<Subject, Long> {
     Optional<Subject> findById(Long id);
 
     Set<Subject> findByNameIn(List<String> subjectsNames);
+
+    Set<Subject> findAllByProfessor(Professor professor);
 }

@@ -25,13 +25,24 @@ public class Subject implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private Set<Student> students = new HashSet<>();
 
-    @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-    private Professor professor = new Professor();
+    @ManyToOne()
+    private Professor professor;
+
+//    public Long getProfessorId() {
+//        return professorId;
+//    }
+//
+//    public void setProfessorId(Long professorId) {
+//        this.professorId = professorId;
+//    }
+//
+//    private Long professorId;
 
     public Subject(String name, String description, int places) {
         this.name = name;
         this.description = description;
         this.places = places;
+//        this.professorId = professorId;
     }
 
     public Subject() {
@@ -87,6 +98,14 @@ public class Subject implements Serializable {
 
     public void addStudent(Student student){
         this.students.add(student);
+    }
+
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
     }
 
     public void removeStudent(Student student){

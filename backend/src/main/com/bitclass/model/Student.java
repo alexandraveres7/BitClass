@@ -3,8 +3,8 @@ package com.bitclass.model;
 import javax.persistence.*;
 import java.util.*;
 
-@Table(name="student")
 @Entity
+@Table(name="students")
 public class Student extends User{
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private Set<Subject> subjects = new HashSet<>();

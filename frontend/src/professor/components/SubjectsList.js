@@ -16,8 +16,11 @@ class SubjectsList extends Component{
 
     componentDidMount() {
         this.setState({isLoading: true});
-
-        const response = this.ApiHelper.get('/v1/subjects');
+        const user = JSON.parse(localStorage.getItem('user'));
+        const professor_id = user.id;
+        console.log(professor_id);
+        const response = this.ApiHelper.get(`/v1/subjects/${professor_id}`);
+        console.log(response);
         response.then(data => this.setState({subjects: data, isLoading: false}));
     }
 

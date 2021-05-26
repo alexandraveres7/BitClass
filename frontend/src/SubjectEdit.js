@@ -6,6 +6,8 @@ import ApiHelperService from "./professor/services/ApiHelperService";
 import "./SubjectEdit.css"
 
 class SubjectEdit extends Component {
+    user = JSON.parse(localStorage.getItem('user'));
+    professor_id = this.user.id;
 
     emptyItem = {
         name: '',
@@ -13,6 +15,7 @@ class SubjectEdit extends Component {
         assistantName: '',
         assistantEmail: '',
         places: '',
+        professorid: this.professor_id,
     };
 
     constructor(props) {
