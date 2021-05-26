@@ -3,13 +3,11 @@ package com.bitclass.controller;
 import com.bitclass.model.Professor;
 import com.bitclass.model.Student;
 import com.bitclass.model.Subject;
-import com.bitclass.model.User;
-import com.bitclass.model.dto.StudentDTO;
 import com.bitclass.model.dto.SubjectDTO;
 import com.bitclass.repos.ProfessorRepository;
 import com.bitclass.repos.SubjectRepository;
-import com.bitclass.repos.UserRepository;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 
@@ -52,12 +49,19 @@ public class SubjectController {
 
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
     @GetMapping("subjects/{professor_id}")
-    Collection<Subject> getProfessorsSubjects(@PathVariable Long professor_id) {
+    Collection<SubjectDTO> getProfessorsSubjects(@PathVariable Long professor_id) {
          Optional<Professor> professor = this.professorRepository.findById(professor_id);
          if (professor.isPresent()) {
-             Set<Subject> courses = subjectRepository.findAllByProfessor(professor.get());
-             System.out.println(courses);
-             return courses;
+             Set<Subject> subjects = subjectRepository.findAllByProfessor(professor.get());
+             Set<SubjectDTO> subjectsDTOs = new HashSet<>();
+             ModelMapper modelMapper = new ModelMapper();
+             modelMapper.addMappings(subjectDTOPropertyMap);
+             for (Subject subj: subjects){
+                 SubjectDTO subjectDTO = modelMapper.map(subj, SubjectDTO.class);
+                 subjectsDTOs.add(subjectDTO);
+             }
+             System.out.println(subjectsDTOs);
+             return subjectsDTOs;
          }
          else{
              return Collections.emptyList();
@@ -66,9 +70,12 @@ public class SubjectController {
 
     @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_PROFESSOR')")
     @GetMapping("/subject/{id}")
-    ResponseEntity<?> getSubject(@PathVariable Long id) {
+    ResponseEntity<SubjectDTO> getSubject(@PathVariable Long id) {
         Optional<Subject> subject = subjectRepository.findById(id);
-        return subject.map(response -> ResponseEntity.ok().body(response))
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.addMappings(subjectDTOPropertyMap);
+        SubjectDTO subjectDTO = modelMapper.map(subject, SubjectDTO.class);
+        return subject.map(response -> ResponseEntity.ok().body(subjectDTO))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -89,20 +96,29 @@ public class SubjectController {
 
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
     @PostMapping("/subject")
-    ResponseEntity<Subject> createSubject(@RequestBody SubjectDTO subjectDTO) throws URISyntaxException {
+    ResponseEntity<String> createSubject(@RequestBody SubjectDTO subjectDTO) throws URISyntaxException {
         log.info("Request to create Uni subject: {}", subjectDTO);
         Long id = subjectDTO.getProfessorid();
         Optional<Professor> professor = this.professorRepository.findById(id);
-        System.out.println("ID: " + id);
-        ModelMapper modelMapper = new ModelMapper();
-        Subject subject = modelMapper.map(subjectDTO, Subject.class);
-        return ResponseEntity.ok().body(subject);
-//        Optional<Professor> professor = this.professorRepository.findById(id);
-//        Subject subj = subject;
-//        subj.setProfessor();
-//        Subject result = subjectRepository.save(subject);
-//        return ResponseEntity.created(new URI("/v1/subject/" + result.getId())).body(result);
+        if (professor.isPresent()) {
+            ModelMapper modelMapper = new ModelMapper();
+            modelMapper.addMappings(subjectDTOPropertyMap);
+            Subject subject = modelMapper.map(subjectDTO, Subject.class);
+            subject.setProfessor(professor.get());
+            subjectRepository.save(subject);
+            return ResponseEntity.ok().body(subject.getName()+ " successuflly created!");
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
+
+    PropertyMap<Subject, SubjectDTO> subjectDTOPropertyMap = new PropertyMap<>(){
+        @Override
+        protected void configure() {
+            skip(destination.getProfessorid());
+        }
+    };
 
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
     @PutMapping("subject/{id}")

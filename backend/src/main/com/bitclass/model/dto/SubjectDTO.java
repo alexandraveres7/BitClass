@@ -6,10 +6,19 @@ public class SubjectDTO {
     private String name;
     private String description;
     private String assistantName, assistantEmail;
+    private int places;
     private Long professorid;
 
     public Long getId() {
         return id;
+    }
+
+    public int getPlaces() {
+        return places;
+    }
+
+    public void setPlaces(int places) {
+        this.places = places;
     }
 
     public void setId(Long id) {
