@@ -31,7 +31,7 @@ class SubjectEdit extends Component {
     async componentDidMount() {
         if (this.props.match.params.id !== 'new') {
             const path = `/v1/subject/${this.props.match.params.id}`
-            const subject = await this.ApiHelper.get(path)
+            const subject = await this.ApiHelper.get(path);
             this.setState({item: subject});
         }
     }

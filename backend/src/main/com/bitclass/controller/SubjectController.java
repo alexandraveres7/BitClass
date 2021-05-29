@@ -72,11 +72,15 @@ public class SubjectController {
     @GetMapping("/subject/{id}")
     ResponseEntity<SubjectDTO> getSubject(@PathVariable Long id) {
         Optional<Subject> subject = subjectRepository.findById(id);
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.addMappings(subjectDTOPropertyMap);
-        SubjectDTO subjectDTO = modelMapper.map(subject, SubjectDTO.class);
-        return subject.map(response -> ResponseEntity.ok().body(subjectDTO))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        Long professorID = subject.get().getProfessor().getId();
+        if (subject.isPresent()) {
+            ModelMapper modelMapper = new ModelMapper();
+            modelMapper.addMappings(subjectDTOPropertyMap);
+            SubjectDTO subjectDTO = modelMapper.map(subject.get(), SubjectDTO.class);
+            subjectDTO.setProfessorid(professorID);
+            return ResponseEntity.ok().body(subjectDTO);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
@@ -122,16 +126,22 @@ public class SubjectController {
 
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
     @PutMapping("subject/{id}")
-    ResponseEntity<Subject> updateSubject(@RequestBody Subject subject){
-        log.info("Request to update Uni subject: {}", subject);
-        Subject result = subjectRepository.save(subject);
-        return ResponseEntity.ok().body(result);
+    ResponseEntity<SubjectDTO> updateSubject(@RequestBody SubjectDTO subjectDTO){
+        log.info("Request to update Uni subject: {}", subjectDTO);
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.addMappings(subjectDTOPropertyMap);
+        Long id = subjectDTO.getProfessorid();
+        Optional<Professor> prof = this.professorRepository.findById(id);
+        Subject updatedSubject = modelMapper.map(subjectDTO, Subject.class);
+        updatedSubject.setProfessor(prof.get());
+        subjectRepository.save(updatedSubject);
+        return ResponseEntity.ok().body(subjectDTO);
     }
 
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
     @DeleteMapping("/subject/{id}")
     public ResponseEntity<?> deleteSubject(@PathVariable Long id){
-        log.info("Request to delete group: {}", id);
+        log.info("Request to delete subject: {}", id);
         subjectRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
