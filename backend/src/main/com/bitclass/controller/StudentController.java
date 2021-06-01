@@ -1,8 +1,11 @@
 package com.bitclass.controller;
 
+import com.bitclass.model.Lab;
 import com.bitclass.model.Student;
 import com.bitclass.model.Subject;
 import com.bitclass.model.dto.StudentDTO;
+import com.bitclass.model.dto.SubjectDTO;
+import com.bitclass.repos.LabRepository;
 import com.bitclass.repos.StudentRepository;
 import com.bitclass.repos.SubjectRepository;
 import org.modelmapper.ModelMapper;
@@ -25,28 +28,65 @@ public class StudentController {
 
     private final SubjectRepository subjectRepository;
 
-    public StudentController(StudentRepository studentRepository, SubjectRepository subjectRepository) {
+    private final LabRepository labRepository;
+
+    public StudentController(StudentRepository studentRepository, SubjectRepository subjectRepository, LabRepository labRepository) {
         this.studentRepository = studentRepository;
         this.subjectRepository = subjectRepository;
+        this.labRepository = labRepository;
     }
 
     @GetMapping("/{id}/courses")
     @PreAuthorize("hasRole('ROLE_STUDENT')")
-    public Collection<Subject> getStudentCourses(@PathVariable Long id) {
+    public Collection<SubjectDTO> getStudentCourses(@PathVariable Long id) {
         log.info("Request to show courses the student is currently enrolled in");
         Optional<Student> student = this.studentRepository.findById(id);
         if (student.isPresent()) {
             Set<Subject> courses = student.get().getSubjects();
-//            Subject subject = new Subject("VVS", "Unit & integration testing", 50);
-//            Professor professor = new Professor("Adina Rolea", "adinarolea", "adinarolea@gmail.com", "password");
-//            subject.setProfessor(professor);
-//            courses.add(subject);
             if (courses.size() < 1) {
                 log.info("Student has no enrolled courses" );
             }
-            return courses;
+            Set<SubjectDTO> coursesDTO = new HashSet<>();
+            ModelMapper modelM = new ModelMapper();
+            for (Subject s: courses){
+                SubjectDTO sDTO = modelM.map(s, SubjectDTO.class);
+                coursesDTO.add(sDTO);
+            }
+            return coursesDTO;
         }
         return Collections.emptySet();
+    }
+
+    @GetMapping("/{id}/courses_ids")
+    @PreAuthorize("hasRole('ROLE_STUDENT')")
+    public Collection<Long> getStudentCoursesIDs(@PathVariable Long id) {
+        log.info("Request to get id's for courses the student is currently enrolled in");
+        Optional<Student> student = this.studentRepository.findById(id);
+        if (student.isPresent()) {
+            Set<Subject> courses = student.get().getSubjects();
+            if (courses.size() < 1) {
+                log.info("Student has no enrolled courses" );
+            }
+            ArrayList<Long> ids = new ArrayList<>();
+            for (Subject s: courses){
+                ids.add(s.getId());
+            }
+            return ids;
+        }
+        return Collections.emptyList();
+    }
+
+    @GetMapping("/labs")
+    @PreAuthorize("hasRole('ROLE_STUDENT')")
+    public Collection<Lab> getAllLabsForCoursesStudentIsEnrolledIn(@RequestBody List<Long> subjectIDs){
+        log.info("Request to get all labs available for courses student is enrolled in");
+        Set<Lab> labs = new HashSet<>();
+
+        for (Long id: subjectIDs){
+          Lab lab = this.labRepository.findLabBySubjectId(id);
+            labs.add(lab);
+        }
+        return labs;
     }
 
     @PutMapping("/{id}/enroll")
@@ -67,6 +107,8 @@ public class StudentController {
             for(Subject subject: subjects){
                 subject.addStudent(s);
             }
+              this.studentRepository.save(s);
+//            this.subjectRepository.saveAll(subjects);
             ModelMapper modelMapper = new ModelMapper();
             StudentDTO studentDTO = modelMapper.map(s, StudentDTO.class);
             return ResponseEntity.ok().body(studentDTO);
@@ -74,5 +116,14 @@ public class StudentController {
         else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/{id}/subjectsnr")
+    @PreAuthorize("hasRole('ROLE_STUDENT')")
+    public int getNumberOfSubjectsStudentIsEnrolledIn(@PathVariable Long id){
+        Optional<Student> student = this.studentRepository.findById(id);
+        int number = student.get().getSubjects().size();
+
+        return number;
     }
 }

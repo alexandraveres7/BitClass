@@ -3,6 +3,7 @@ package com.bitclass.controller;
 import com.bitclass.model.Professor;
 import com.bitclass.model.Student;
 import com.bitclass.model.Subject;
+import com.bitclass.model.dto.ProfessorDTO;
 import com.bitclass.model.dto.SubjectDTO;
 import com.bitclass.repos.ProfessorRepository;
 import com.bitclass.repos.SubjectRepository;
@@ -36,15 +37,19 @@ public class SubjectController {
 
     @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_PROFESSOR')")
     @GetMapping("/subjects")
-    Collection<Subject> subjects() {
-//        Subject subject1 = new Subject("PCBE", "Concurrent programming", 50);
-//        Subject subject2 = new Subject("SO", "Processes, threads, operating systems related..", 100);
-//        Subject subject3 = new Subject("VVS", "Unit and integration testing", 70);
-//        subjectRepository.deleteAll();
-//        subjectRepository.save(subject1);
-//        subjectRepository.save(subject2);
-//        subjectRepository.save(subject3);
-        return subjectRepository.findAll();
+    Collection<SubjectDTO> subjects() {
+        List<Subject> subjects = subjectRepository.findAll();
+        ModelMapper modelMapp = new ModelMapper();
+        List<SubjectDTO> subjectsDTOList = new ArrayList<>();
+        for (Subject subj: subjects){
+            String name = subj.getProfessor().getName();
+            ProfessorDTO professorDTO = new ProfessorDTO(name);
+            SubjectDTO subDTO = modelMapp.map(subj, SubjectDTO.class);
+            subDTO.setProfessor(professorDTO);
+            subjectsDTOList.add(subDTO);
+        }
+        System.out.println(subjectsDTOList);
+        return subjectsDTOList;
     }
 
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
@@ -109,6 +114,8 @@ public class SubjectController {
             modelMapper.addMappings(subjectDTOPropertyMap);
             Subject subject = modelMapper.map(subjectDTO, Subject.class);
             subject.setProfessor(professor.get());
+            //professor.get().addTeachedSubject(subject);
+            //this.professorRepository.save(professor.get());
             subjectRepository.save(subject);
             return ResponseEntity.ok().body(subject.getName()+ " successuflly created!");
         }
@@ -120,7 +127,7 @@ public class SubjectController {
     PropertyMap<Subject, SubjectDTO> subjectDTOPropertyMap = new PropertyMap<>(){
         @Override
         protected void configure() {
-            skip(destination.getProfessorid());
+            skip(destination.getProfessorid(), destination.getProfessor());
         }
     };
 

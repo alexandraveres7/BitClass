@@ -3,7 +3,7 @@ import { Button, ButtonGroup, Container, Table } from 'reactstrap';
 import AppNavbar from '../../AppNavbar';
 import { Link } from 'react-router-dom';
 import ApiHelperService from "../services/ApiHelperService";
-import "../../SubjectsList.css";
+import "./SubjectsList.css";
 
 class SubjectsList extends Component{
 

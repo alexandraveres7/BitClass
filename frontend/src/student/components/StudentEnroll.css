@@ -1,11 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Sen:wght@400;700;800&display=swap");
+
 .check {
-    margin-top: 30px;
+    /*margin-top: 60px;*/
+    /*margin-left: 25%;*/
+    padding: 10px;
+    border-color: black;
+    border-width: 5px;
+    display: flex;
+    margin: auto;
+    width: 50%;
+    flex-wrap: wrap;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }
 
-/* When the checkbox is checked, add a blue background */
-.container input:checked ~ .checkmark {
-    background-color: #ffff00;
+.checkbox-title {
+    margin-top: 35px;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-bottom: 30px;
+}
+
+.container .checkmark {
+    padding-left: 10%;
+}
+
+.button-submit{
+    margin-top: 20px;
+    padding-left: 45%;
 }
 
 .container .checkmark:after {
@@ -18,4 +40,33 @@
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
+}
+
+.container {
+    border: 1px solid lightslategrey;
+    font-family: Sen, sans-serif;
+    justify-items: center;
+    padding: 0.75rem;
+    margin-top: 5px;
+}
+
+.btn-outline-primary{
+    background-color: yellow;
+    color: black;
+    border-color: yellow;
+}
+
+.but:hover{
+    border: 2px solid black;
+    background-color: #ffff00;
+}
+
+.cbb{
+    margin-top: 20px;
+    font-style: italic;
+}
+
+.cbb .prob{
+    font-style: initial;
+    font-weight: bold;
 }

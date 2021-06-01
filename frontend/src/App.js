@@ -3,7 +3,7 @@ import './App.css';
 import Home from './Home';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import SubjectsList from './professor/components/SubjectsList';
-import SubjectEdit from "./SubjectEdit";
+import SubjectEdit from "./professor/components/SubjectEdit";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SubjectStudents from "./SubjectStudents";
 import SignUp from "./auth/components/SignUp";

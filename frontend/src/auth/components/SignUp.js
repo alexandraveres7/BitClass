@@ -3,8 +3,9 @@ import AppNavbar from "../../AppNavbar";
 import { Container } from 'reactstrap';
 import { Button, Form, FormGroup, Input, Label, Row, Col } from "reactstrap";
 import { Alert } from "react-bootstrap"
-
+import './SignUp.css'
 import AuthenticationService from '../services/AuthenticationService'
+import {ReactComponent as Logo} from "../../bitclass.svg";
 
 const validEmailRegex = RegExp(/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i);
 
@@ -117,15 +118,15 @@ class SignUp extends Component {
         let alert = "";
 
         const alert_style = {
-            marginTop: '30px'
+            marginTop: '15px'
         };
 
         const button = {
-            width: '40%',
+            width: '50%',
             height: '30%',
             justifyContent: 'center',
             alignItems: 'center',
-            marginLeft: '0%',
+            marginLeft: '23%',
             marginTop: '5%',
             background: '#ffff00',
             color: 'black',
@@ -149,8 +150,11 @@ class SignUp extends Component {
         }
 
         return (
-            <div>
-                <AppNavbar/>
+            <div className='big'>
+                <Logo className="logo"/>
+                <div className="hr">
+                    <hr/>
+                </div>
                 <Container fluid>
                     <Row>
                         <Col sm="12" md={{ size: 4, offset: 4 }}>
@@ -233,7 +237,7 @@ class SignUp extends Component {
                                 </FormGroup>
 
                                 <Button style={button} variant="primary" type="submit">
-                                    Create
+                                    Sign Up
                                 </Button>
                                 {
                                     !this.state.validForm && (

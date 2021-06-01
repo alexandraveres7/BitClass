@@ -1,0 +1,16 @@
+.card-usr {
+    display: flex;
+    justify-content: center;
+    margin-top: 15%;
+}
+
+.card-horizontal {
+    display: flex;
+    flex: 1 1 auto;
+}
+
+.bla {
+    margin-top: 45px;
+}
+
+

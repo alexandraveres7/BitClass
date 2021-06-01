@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import StudentEditSchedule from "./StudentEditSchedule";
+import StudentEditSchedule2 from "./StudentEditSchedule2";
 import AppNavbar from "../../AppNavbar";
 
 class StudentSchedule extends Component {
@@ -15,7 +15,7 @@ class StudentSchedule extends Component {
         return(
             <div>
                 <AppNavbar/>
-                <StudentEditSchedule/>
+                <StudentEditSchedule2/>
             </div>
         )
     }

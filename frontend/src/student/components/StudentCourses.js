@@ -3,18 +3,19 @@ import React, { Component } from 'react';
 import {Container, Table} from 'reactstrap';
 import { Link } from 'react-router-dom';
 import StudentService from '../services/StudentService';
+import "./StudentCourses.css"
 
 class StudentCourses extends Component{
 
     constructor(props) {
         super(props);
-        this.state = {subjects: [], areAllocated: true};
+        this.state = {subjects: [], areAllocated: false};
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         const response = StudentService.getStudentCourses();
-        let count = Object.keys(response).length;
-        console.log(count);
+
+        const count = await StudentService.getNrOfCourses();
 
         if (count > 0){
             this.setState({areAllocated: true});
@@ -26,8 +27,7 @@ class StudentCourses extends Component{
         const {subjects, areAllocated} = this.state;
 
         const jsonQuery = require('json-query');
-        
-        console.log(areAllocated);
+
         if (!areAllocated) {
             return (
                 <div>
@@ -44,7 +44,7 @@ class StudentCourses extends Component{
         }
 
         const subjectsList = subjects.map((subject) => {
-            console.log(subject)
+            console.log("Materii" , subject);
             const name = `${subject.name || ''}`;
             const description = `${subject.description || ''}`
             const assistant_name = `${subject.assistantName || ''}`;
@@ -61,7 +61,7 @@ class StudentCourses extends Component{
             <div>
                 <AppNavbar/>
                 <Container fluid>
-                    <h3>Year 4 - Subjects</h3>
+                    <h3>Year 4 - Chosen courses</h3>
                     <Table className="mt-4">
                         <thead>
                         <tr>

@@ -56,19 +56,13 @@ export default class AppNavbar extends Component {
                     <Logo/>
                     </div>
                     <Nav className="mr-auto">
-                        {this.state.showStudent && <NavLink style={{color: '#000000'}} href="/student">Student</NavLink>}
-                        {this.state.showProfessor && <NavLink style={{color: '#000000'}} href="/professor">Professor</NavLink>}
                     </Nav>
                     <Navbar.Toggle onClick={this.toggle} aria-controls="responsive-navbar-nav"/>
                     <Navbar.Collapse isOpen={this.state.isOpen} id="responsive-navbar-nav">
                         {
                             this.state.login ? (
                                 <Nav className="mr-auto">
-                                    <NavItem>
-                                        <NavbarText>
-                                            Signed in as: <a href="/profile">{this.state.username}</a>
-                                        </NavbarText>
-                                    </NavItem>
+                                    <NavLink style={{color: '#000000'}} href="/profile">Profile</NavLink>
                                     {this.state.showStudent && <NavLink style={{color: '#000000'}} href="/student/courses">Courses</NavLink>}
                                     {this.state.showStudent && <NavLink style={{color: '#000000'}} href="/student/schedule">Schedule</NavLink>}
                                     {this.state.showProfessor && <NavLink style={{color: '#000000'}} href="/professor/courses">Courses</NavLink>}

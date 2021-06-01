@@ -5,5 +5,9 @@
     border-bottom: 6px solid black;
 }
 .nav-item-space{
-    padding-left: 100px;
+    padding-left: 2px;
+}
+
+.nav-item-space2{
+    padding-left: 5px;
 }

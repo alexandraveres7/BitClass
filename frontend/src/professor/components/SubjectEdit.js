@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import {Button, Container, Form, FormGroup, Input, Label} from 'reactstrap';
-import AppNavbar from './AppNavbar';
-import ApiHelperService from "./professor/services/ApiHelperService";
+import AppNavbar from '../../AppNavbar';
+import ApiHelperService from "../services/ApiHelperService";
 import "./SubjectEdit.css"
 
 class SubjectEdit extends Component {

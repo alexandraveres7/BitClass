@@ -1,0 +1,20 @@
+.bb {
+    margin-top: 80px;
+}
+
+.bb .butonas{
+    justify-content: center;
+    width:25%;
+    margin-left: 38%;
+    background-color: yellow;
+    color: black;
+
+}
+
+.unselected {
+    background-color: red;
+}
+
+.selected {
+    border-color: green;
+}

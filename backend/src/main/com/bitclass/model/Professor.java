@@ -25,4 +25,8 @@ public class Professor extends User {
     public void setTeachedSubjects(Set<Subject> teachedSubjects) {
         this.teachedSubjects = teachedSubjects;
     }
+
+    public void addTeachedSubject(Subject subject) {
+        this.teachedSubjects.add(subject);
+    }
 }

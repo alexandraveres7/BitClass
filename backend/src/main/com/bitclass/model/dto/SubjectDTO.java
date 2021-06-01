@@ -8,6 +8,15 @@ public class SubjectDTO {
     private String assistantName, assistantEmail;
     private int places;
     private Long professorid;
+    private ProfessorDTO professor;
+
+    public ProfessorDTO getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(ProfessorDTO professor) {
+        this.professor = professor;
+    }
 
     public Long getId() {
         return id;
